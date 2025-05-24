@@ -5,12 +5,14 @@
  * - Displaying messages
  * - Simulating bot responses
  * - Auto-scrolling
+ * - Theme switching
  */
 
 // DOM Elements
 const messagesContainer = document.getElementById("messages-container");
 const messageForm = document.getElementById("message-form");
 const userInput = document.getElementById("user-input");
+const themeButtons = document.querySelectorAll(".theme-btn");
 
 // Chat state
 let isWaitingForResponse = false;
@@ -20,7 +22,39 @@ let isWaitingForResponse = false;
  */
 function initChat() {
   messageForm.addEventListener("submit", handleSubmit);
+  initThemeSystem();
   scrollToBottom();
+}
+
+/**
+ * Initialize theme system
+ */
+function initThemeSystem() {
+  // Load saved theme or default to light
+  const savedTheme = localStorage.getItem("chat-theme") || "light";
+  setTheme(savedTheme);
+
+  // Add event listeners to theme buttons
+  themeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const theme = button.dataset.theme;
+      setTheme(theme);
+      localStorage.setItem("chat-theme", theme);
+    });
+  });
+}
+
+/**
+ * Set the current theme
+ * @param {string} theme - The theme name
+ */
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+
+  // Update active button
+  themeButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.theme === theme);
+  });
 }
 
 /**
@@ -136,6 +170,8 @@ function generateMockResponse(userMessage) {
     return "Hello there! How can I assist you today?";
   } else if (lowerCaseMessage.includes("help")) {
     return "I'm here to help! What do you need assistance with?";
+  } else if (lowerCaseMessage.includes("theme")) {
+    return "I see you're interested in themes! You can switch between Light, Dark, Gradient, and High Contrast themes using the buttons in the header.";
   } else if (lowerCaseMessage.includes("thank")) {
     return "You're welcome! Is there anything else you'd like to know?";
   } else if (lowerCaseMessage.includes("bye")) {
