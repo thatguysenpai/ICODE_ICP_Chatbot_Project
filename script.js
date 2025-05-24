@@ -174,8 +174,12 @@ function generateMockResponse(userMessage) {
     return "I see you're interested in themes! You can switch between Light, Dark, Gradient, and High Contrast themes using the buttons in the header.";
   } else if (lowerCaseMessage.includes("thank")) {
     return "You're welcome! Is there anything else you'd like to know?";
+  } else if (lowerCaseMessage.includes("depressed")) {
+    return "I'm really sorry you're feeling this way. You're not alone, and how you're feeling is valid. If you’d like to talk about what’s on your mind, I’m here to listen — no pressure, no judgment.Also, if things feel overwhelming, it might help to reach out to a mental health professional. You deserve support.";
   } else if (lowerCaseMessage.includes("bye")) {
     return "Goodbye! Feel free to return if you have more questions.";
+  } else if (lowerCaseMessage.includes("struggling")) {
+    return "I'm really sorry to hear that. It’s okay to struggle — it doesn’t make you weak, it makes you human. You don’t have to carry it all alone. If you want to talk about what’s going on, I’m here to listen. Just take your time";
   } else {
     return "That's interesting. Can you tell me more about that?";
   }
